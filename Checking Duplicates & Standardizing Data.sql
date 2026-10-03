@@ -48,7 +48,7 @@ DELETE FROM staging1 WHERE row_num > 1;
 
 # Standardize Data
 
-/* In this step I update the date format using STR_DATE and COALESCE function, COALESCE function check the column if the  */
+/* In this step, I standardized the date format using STR_TO_DATE() and COALESCE(). The functions check for valid date values and convert them into the standard YYYY-MM-DD format in a new column.  */
 
 SELECT DISTINCT(transaction_date) FROM staging1;
 
@@ -78,6 +78,8 @@ UPDATE staging1 SET transaction_date = REPLACE(transaction_date,'/','-');
 SELECT * FROM staging1 WHERE amount_php < 0;
 
 UPDATE staging1 SET amount_php = NULL WHERE amount_php < 0;
+
+/* In this step, I identified inconsistent data, including typos, formatting issues, and extra spaces, using LOCATE(), CONCAT(), and CASE statements. I then used these functions to clean and standardize the affected values. */
 
 SELECT customer_name,
 	CASE
