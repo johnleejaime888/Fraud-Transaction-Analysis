@@ -1,3 +1,18 @@
+/*In this process, I cleaned the raw data by identifying and fixing inconsistent data, including typos, extra spaces, improper formats, and negative values. 
+I also removed duplicate records to maintain data accuracy and ensure unique row counts.*/
+
+/* 
+Data Validation
+ - Duplicates Records
+ - I identified blank and negative values in the amount column  and converted them to NULL to prevent invalid values from affecting the calculation of totals and other metrics.
+ - I identified missing values in the location column and replaced them with "Unknown" to preserve the records without making assumptions about the correct values.
+ */
+
+/* SQL Function Used: 
+CTE Function, Windows Function, Argregated Function, CASE Function, CONCAT, LOCATE, UPPER, LOWER
+SUBSTRING, SUBSTRING_INDEX, SELECT, UPDATE, DELETE, WHERE, AS, GROUP BY */
+
+
 use project2000;
 
 CREATE TABLE staging
@@ -8,6 +23,8 @@ SELECT * FROM transactions_raw;
 
 
 # Checking Duplicate
+
+/*I identified duplicate records using a CTE and window function. Since UPDATE is not applicable within the CTE, I created a new staging table to remove the duplicate records.*/
 
 WITH duplicateCTE AS (
 	SELECT *,
@@ -30,6 +47,8 @@ SELECT *,
 DELETE FROM staging1 WHERE row_num > 1;
 
 # Standardize Data
+
+/* In this step I update the date format using STR_DATE and COALESCE function, COALESCE function check the column if the  */
 
 SELECT DISTINCT(transaction_date) FROM staging1;
 
